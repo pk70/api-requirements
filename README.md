@@ -1,66 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# api-requirements-instructions
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Feature
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# api-requirements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Description
+We want you to implement a REST API endpoint that given a list of products, applies some
+discounts to them and can be filtered.
+You are free to choose whatever language and tools you are most comfortable with, but, we value you to use laravel since our main platform is also on laravel / php.
+We will value your ability to apply the following rules on the corresponding layers following Domain Driven Design. 
+Please add instructions on how to run it and publish it on your fork.
 
-## Laravel Sponsors
+## Deliverable 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Fork the project, work on the solution and send us back a link to your forked GitHub project to examine your answer to this test.
 
-### Premium Partners
+## Conditions 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+The prices are integers for example, 100.00€ would be 10000.
+  
+1. [x] You can store the products as you see fit (json file, in memory, rdbms of choice)
+2. [x] Products in the "insurance" category have a 30% discount.
+3. [x] The product with sku = 000003 has a 15% discount.
+4. [x] Provide a single endpoint. GET /products.
+5. [x] Can be filtered by category as a query string parameter.
+6. [x] (optional) Can be filtered by price as a query string parameter, this filter applies before discounts are applied.
+7. [x] Returns a list of Products with the given discounts applied when necessary Product model.
+8. [x] price.currency is always EUR.
+9. [x] When a product does not have a discount, price.final and price.original should be the same number and discount_percentage should be null.
+10. [x] When a product has a discount, price.original is the original price, price.final is the amount with the discount applied and discount_percentage represents the applied discount with the % sign.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Example product with a discount of 30% applied:  
+`    {
+      "sku": "000001",
+      "name": "Full coverage insurance",
+      "category": "insurance",
+      "price": {
+          "original": 89000,
+          "final": 62300,
+          "discount_percentage": "30%",
+          "currency": "EUR"
+      }
+    }`
+  
+  Example product without a discount:
+  
+      `{
+        "sku": "000002",
+        "name": "Compact Car X3",
+        "category": "vehicle",
+        "price": {
+            "original": 89000,
+            "final": 89000,
+            "discount_percentage": null,
+            "currency": "EUR"
+        }
+      }`
+      
+## Dataset.       
+The following dataset is the only dataset you need to be able to serve on the API: 
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+`{
+    "products": [
+      {
+        "sku": "000001",
+        "name": "Full coverage insurance",
+        "category": "insurance",
+        "price": 89000
+      },
+      {
+        "sku": "000002",
+        "name": "Compact Car X3",
+        "category": "vehicle",
+        "price": 99000
+      },
+      {
+        "sku": "000003",
+        "name": "SUV Vehicle, high end",
+        "category": "vehicle",
+        "price": 150000
+      },
+      {
+        "sku": "000004",
+        "name": "Basic coverage",
+        "category": "insurance",
+        "price": 20000
+      },
+      {
+        "sku": "000005",
+        "name": "Convertible X2, Electric",
+        "category": "vehicle",
+        "price": 250000
+      }
+    ]
+  }`

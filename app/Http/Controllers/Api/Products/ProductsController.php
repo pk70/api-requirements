@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api\Products;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\ApistatusController;
+use Illuminate\Support\Facades\Validator;
 use App\Interfaces\ProductsRepositoryInterface;
+use App\Http\Controllers\Api\ApistatusController;
 
 class ProductsController extends ApistatusController
 {
@@ -15,7 +16,14 @@ class ProductsController extends ApistatusController
 
     public function show(Request $request)
     {
-       return $this->productRepository->products($request->all());
-        //return $request->all();
+        $validator = Validator::make($request->all(), [
+            'category' => 'nullable|string',
+            'price_min' => 'nullable|numeric|required_with:price_max',
+            'price_max' => 'nullable|numeric|required_with:price_min',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendError('error', $validator->errors());
+        }
+        return $this->sendResponse($this->productRepository->products($request), 'successfully done');
     }
 }

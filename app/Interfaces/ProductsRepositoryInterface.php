@@ -1,14 +1,15 @@
 <?php
 namespace App\Interfaces;
 
+use Illuminate\Http\Request;
 
 interface ProductsRepositoryInterface{
 
-    public function products(array $request_array);
-    public function category($array,string $category_name,float $filter_price);
-    public function default(array $array,float $filter_price);
-   // public function jsonarray_decode(array $json_array);
+    public function products(Request $request_filter);
+    public function filterData(array $array,Request $request_filter);
+    public function withoutFilterData(array $array);
+    public function categoryFilterData(array $data,string $category_name);
+    public function priceFilterData(array $data,string $price_min,$price_max);
+    public function categoryAndPriceFilterData(array $data,string $category_name,$price_min,$price_max);
 
 }
-
-?>
