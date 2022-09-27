@@ -5,7 +5,7 @@
 2. [x] Composer.
 
 # How to run project
-- `git clone https://github.com/pk70/api-requirements.git`
+- `git clone https://github.com/pk70/pk70-api-requirements.git`
 - `cd api-requirements`
 - `composer install`
 - `php artisan serve`
