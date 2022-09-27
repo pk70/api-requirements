@@ -1,19 +1,20 @@
-# api-requirements-instructions
+# Instructions
 
 # requirements
-1. [x] PHP 8 minimum.
+1. [x] PHP >= 8.0.
 2. [x] Composer.
 
-# How to install
-- `clone`
+# How to run project
+- `git clone https://github.com/pk70/api-requirements.git`
+- `cd api-requirements`
+- `composer install`
+- `php artisan serve`
 
 # api endpoints with query string parameter
 - `GET http://127.0.0.1:8000/api/products`
 - `GET http://127.0.0.1:8000/api/products?category=insurance`
 - `GET http://127.0.0.1:8000/api/products?category=insurance&price_min=1000&price_max=90000`
 - `GET http://127.0.0.1:8000/api/products?category=insurance&price_min=1000&price_max=90000`
-
-
 
 
 
